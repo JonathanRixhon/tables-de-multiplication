@@ -1,3 +1,16 @@
+<?php
+require('./phpfiles/validation.php');
+
+if (isset($_GET['nbtables'], $_GET['nbvaleurs'])) {
+    $old = $_GET;
+    $data = validated();
+    /*var_dump($data);
+    die(); */
+    /* if (isset($data['error'])) { }*/
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="fr-be">
 
@@ -16,51 +29,41 @@
             <form action="index.php" method="get">
                 <div class="form-group">
                     <label class="control-label" for="nbtables">Nombre de tables : </label>
-                    <input class="form-control" id="nbtables" type="text" name="nbtables" value="3">
+                    <input class="form-control" id="nbtables" type="text" name="nbtables" value="0">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="nbvaleurs">Nombre de valeurs : </label>
-                    <input class="form-control" id="nbvaleurs" type="text" name="nbvaleurs" value="4">
+                    <input class="form-control" id="nbvaleurs" type="text" name="nbvaleurs" value="0">
                 </div>
                 <input type="submit">
             </form>
         </section>
-        <section>
-            <h2>Voici vos tables</h2>
-            <table class="table table-striped table-bordered">
-                <caption>Les 4 premières valeurs des 3 premières tables</caption>
-                <tr>
-                    <th class="vide">&nbsp;</th>
-                    <th scope="col">1</th>
-                    <th scope="col">2</th>
-                    <th scope="col">3</th>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>1 * 1 = 1</td>
-                    <td>1 * 2 = 2</td>
-                    <td>1 * 3 = 3</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>2 * 1 = 2</td>
-                    <td>2 * 2 = 4</td>
-                    <td>2 * 3 = 6</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>3 * 1 = 3</td>
-                    <td>3 * 2 = 6</td>
-                    <td>3 * 3 = 9</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>4 * 1 = 4</td>
-                    <td>4 * 2 = 8</td>
-                    <td>4 * 3 = 12</td>
-                </tr>
-            </table>
-        </section>
+        <?php if (isset($data['error'])) : ?>
+            <p style="color:red"><?= $data['error'] ?></p>
+        <?php elseif (isset($_GET['nbtables'], $_GET['nbvaleurs'])) : ?>
+            <section>
+                <h2>Voici vos tables</h2>
+                <table class="table table-striped table-bordered">
+                    <caption>Les 4 premières valeurs des 3 premières tables</caption>
+                    <!-- Première ligne -->
+                    <tr>
+                        <th class="vide">&nbsp;</th>
+                        <?php for ($valuehead = 1; $valuehead <= $data['nbvaleurs']; $valuehead++) : ?>
+                            <th scope="col"><?= $valuehead ?></th>
+                        <?php endfor ?>
+                    </tr>
+                    <!-- contenu du tableau -->
+                    <?php for ($numTable = 1; $numTable <= $data['nbtables']; $numTable++) : ?>
+                        <tr>
+                            <th scope="row"><?= $numTable ?></th>
+                            <?php for ($numValeur = 1; $numValeur <= $data['nbvaleurs']; $numValeur++) : ?>
+                                <td><?= $numValeur ?> * <?= $numTable ?> = <?= $numValeur * $numTable ?></td>
+                            <?php endfor ?>
+                        </tr>
+                    <?php endfor ?>
+                </table>
+            </section>
+        <?php endif ?>
     </main>
 </body>
 
