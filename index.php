@@ -53,14 +53,7 @@ if (isset($_GET['nbtables'], $_GET['nbvaleurs'])) {
                         <?php endfor ?>
                     </tr>
                     <!-- contenu du tableau -->
-                    <?php for ($numTable = 1; $numTable <= $data['nbtables']; $numTable++) : ?>
-                        <tr>
-                            <th scope="row"><?= $numTable ?></th>
-                            <?php for ($numValeur = 1; $numValeur <= $data['nbvaleurs']; $numValeur++) : ?>
-                                <td><?= $numValeur ?> * <?= $numTable ?> = <?= $numValeur * $numTable ?></td>
-                            <?php endfor ?>
-                        </tr>
-                    <?php endfor ?>
+                    <?php require './phpfiles/tablecontent.php' ?>
                 </table>
             </section>
         <?php endif ?>
