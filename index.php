@@ -4,9 +4,6 @@ require('./phpfiles/validation.php');
 if (isset($_GET['nbtables'], $_GET['nbvaleurs'])) {
     $old = $_GET;
     $data = validated();
-    /*var_dump($data);
-    die(); */
-    /* if (isset($data['error'])) { }*/
 }
 
 
@@ -44,7 +41,7 @@ if (isset($_GET['nbtables'], $_GET['nbvaleurs'])) {
             <section>
                 <h2>Voici vos tables</h2>
                 <table class="table table-striped table-bordered">
-                    <caption>Les 4 premières valeurs des 3 premières tables</caption>
+                    <caption>Les <?= $data['nbvaleurs'] ?> premières valeurs des <?= $data['nbtables'] ?> premières tables</caption>
                     <!-- Première ligne -->
                     <tr>
                         <th class="vide">&nbsp;</th>
